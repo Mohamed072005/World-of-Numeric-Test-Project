@@ -32,7 +32,6 @@ http://localhost:4000/api#/
 │   │
 └── client/         # Frontend Vue.js
     ├── src/
-    │   ├── views/       # Pages du tableau de bord
     │   ├── components/  # Composants réutilisables
     │   └── store/       # État global Vuex
 ```
@@ -59,14 +58,7 @@ npm install
 cp .env.example .env
 ```
 
-3. Importation des données initiales :
-```bash
-# Placez vos fichiers CSV dans le dossier approprié du backend
-cd server
-node dbSeed.js
-```
-
-4. Démarrage du serveur de développement :
+3. Démarrage du serveur de développement :
 ```bash
 npm run start:dev
 ```
@@ -106,7 +98,7 @@ npm run dev
 
 - Node.js (version LTS recommandée)
 - MongoDB
-- npm ou yarn
+- npm
 
 ## Structure de la Base de Données
 
