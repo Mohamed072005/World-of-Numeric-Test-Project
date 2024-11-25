@@ -1,6 +1,6 @@
 <template>
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-3xl mx-auto">
-        <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">Ventes par catégorie</h2>
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-3xl mx-auto">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">Ventes par catégorie</h2>
         <div v-if="!data" class="w-full flex justify-center">
             <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
         </div>
@@ -48,8 +48,7 @@ export default defineComponent({
                     labels: props.data.map((item) => item.category),
                     datasets: [
                         {
-                            label: 'Ventes totales',
-                            data: props.data.map((item) => item.totalSales),
+                            data: props.data.map((item) => item.percentage),
                             backgroundColor: ['#4caf50', '#2196f3', '#ffc107', '#f44336', '#9c27b0'],
                             borderColor: '#fff',
                             borderWidth: 1,
@@ -61,11 +60,11 @@ export default defineComponent({
                     plugins: {
                         tooltip: {
                             callbacks: {
-                                label: (context) => `${(context.raw as number).toLocaleString()} €`,
+                                label: (context) => `${(context.raw as number).toFixed(2)} %`,
                             },
                         },
                         legend: {
-                            display: true,
+                            display: false,
                             position: 'top',
                         },
                     },
