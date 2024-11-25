@@ -3,6 +3,8 @@
 /node_modules
 /build
 /.env
+/sales.csv
+/products.csv
 
 # Logs
 logs
