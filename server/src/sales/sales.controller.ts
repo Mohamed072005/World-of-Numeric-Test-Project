@@ -1,7 +1,13 @@
 import { Controller, Get, HttpException, HttpStatus, Inject, Param } from "@nestjs/common";
 import { SalesRepositoryInterface } from "./interfaces/sales.repository.interface";
 import { SalesServiceInterface } from "./interfaces/sales.service.interface";
+import { ApiExtraModels, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { SalesResponseDTO } from "./dto/sales.response.dto";
+import { SalesErrorResponseDTO } from "./dto/sales.error.response.dto";
+import { SalesTimeParamDTO } from "./dto/sales.time.param.dto";
 
+@ApiTags('Sales Analytics')
+@ApiExtraModels(SalesResponseDTO, SalesErrorResponseDTO)
 @Controller()
 export class SalesController {
     constructor(
@@ -10,7 +16,28 @@ export class SalesController {
     ) { }
 
     @Get('/analytics/total_sales/:selectedTime')
-    async getSalesByTime(@Param() param: {selectedTime: string | null}): Promise<{sales: number}> {
+    @ApiOperation({
+        summary: 'Get total sales for a specific time period',
+        description: 'Retrieves the total sales amount for a specified number of days in the past. The selectedTime parameter represents the number of days to look back.'
+    })
+    @ApiParam({
+        name: 'selectedTime',
+        required: true,
+        description: 'Number of days to look back (must be a positive number)',
+        schema: { type: 'string' },
+        example: '7'
+    })
+    @ApiResponse({
+        status: 200,
+        description: 'Successfully retrieved total sales',
+        type: SalesResponseDTO
+    })
+    @ApiResponse({
+        status: 400,
+        description: 'Bad request - Invalid selectedTime parameter or processing error',
+        type: SalesErrorResponseDTO
+    })
+    async getSalesByTime(@Param() param: SalesTimeParamDTO): Promise<SalesResponseDTO> {
         try {
             const selectedTime = parseInt(param.selectedTime, 10);
             if(isNaN(selectedTime) || selectedTime < 0){

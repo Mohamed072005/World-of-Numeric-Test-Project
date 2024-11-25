@@ -92,7 +92,7 @@ const getchTotalSales = async () => {
 const fetchCategorysStatistiques = async () => {
   try {
     const response = await fetchCategorys();
-    categoryData.value = response.data.products;
+    categoryData.value = response.data.categorys;
   } catch (err: any) {
     error.value = err.message;
   }

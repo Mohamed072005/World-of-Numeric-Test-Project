@@ -6,7 +6,7 @@
                     <tr>
                         <th
                             class="px-6 py-3 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                            ID
+                            Catégorie
                         </th>
                         <th
                             class="px-6 py-3 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
@@ -14,7 +14,7 @@
                         </th>
                         <th
                             class="px-6 py-3 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                            Prix (€)
+                            Total Ventes Prix (€)
                         </th>
                         <th
                             class="px-6 py-3 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">

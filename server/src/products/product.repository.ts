@@ -3,6 +3,8 @@ import { ProductRepositoryInterface } from "./interfaces/product.repository.inte
 import { Products } from "./product.schema";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
+import { ProductsCategorysResponseDTO } from "./dto/products.categorys.response.dto";
+import { CategorySalesResult } from "./interfaces/category.interface";
 
 @Injectable()
 export class ProductRepository implements ProductRepositoryInterface {
@@ -53,7 +55,7 @@ export class ProductRepository implements ProductRepositoryInterface {
                     _id: "$_id",
                     name: { $first: "$name" },
                     totalRevenue: { $sum: { $multiply: ['$price', '$sales.quantity'] } },
-                    salesCount: { $sum: 1 }, 
+                    salesCount: { $sum: 1 },
                 },
             },
             {
@@ -65,7 +67,7 @@ export class ProductRepository implements ProductRepositoryInterface {
         ])
     }
 
-    async getSalesDistributionByCategory(): Promise<Products[]> {
+    async getSalesDistributionByCategory(): Promise<CategorySalesResult[]> {
         const distribution = await this.productModule.aggregate([
             {
                 $lookup: {
@@ -80,20 +82,20 @@ export class ProductRepository implements ProductRepositoryInterface {
             },
             {
                 $group: {
-                    _id: '$category', 
+                    _id: '$category',
                     totalSales: { $sum: '$sales.quantity' },
                 },
             },
             {
                 $group: {
-                    _id: null, 
+                    _id: null,
                     categories: {
                         $push: {
                             category: '$_id',
                             totalSales: '$totalSales',
                         },
                     },
-                    globalSales: { $sum: '$totalSales' }, 
+                    globalSales: { $sum: '$totalSales' },
                 },
             },
             {
@@ -116,7 +118,7 @@ export class ProductRepository implements ProductRepositoryInterface {
                 $sort: { percentage: -1 },
             },
         ]);
-    
-        return distribution;
+
+        return distribution as CategorySalesResult[]
     }
 }
